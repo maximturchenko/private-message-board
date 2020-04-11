@@ -3,12 +3,11 @@
 @section('content')
 
     @if(Auth::user())
-        <form action="/add/mes" method="post" class="form-horizontal" style="margin-bottom: 50px;">
-            <div class="alert alert-error">
-                Сообщение не может быть пустым
-            </div>
+        <form action="/messages/add" method="post" class="form-horizontal" style="margin-bottom: 50px;">
+            {{csrf_field()}}
+            @include('layouts.errors')
             <div class="control-group">
-                <textarea style="width: 100%; height: 50px;" type="password" id="inputText" placeholder="Ваше сообщение..."
+                <textarea style="width: 100%; height: 50px;" type="password" id="inputText" name="message" placeholder="Ваше сообщение..."
                     data-cip-id="inputText"></textarea>
             </div>
             <div class="control-group">

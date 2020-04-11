@@ -26,6 +26,5 @@ Auth::routes([
 ]);
 
 Route::get('/', 'MainController@index')->name('home');
-
-Route::post('/message/add', 'MainController@add');
-Route::post('/message/edit', 'MainController@edit');
+Route::post('/messages/add', 'MainController@store');
+Route::put('/messages/edit', 'MainController@update');
