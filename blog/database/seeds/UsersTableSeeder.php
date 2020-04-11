@@ -6,6 +6,7 @@ use Illuminate\Support\Str;
 
 use Illuminate\Support\Facades\Hash;
 use App\User;
+ 
 
 class UsersTableSeeder extends Seeder
 {
@@ -17,29 +18,25 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         DB::table('users')->delete();
-        User::create(array(
+        DB::table('users')->insert([
             'name' => 'Eugene',
             'email' =>  Str::random(10).'@gmail.com',
-            'email_verified_at' => Str::random(10),
             'password' => Hash::make('password'),
-        ));
-        User::create(array(
+            ]);
+        DB::table('users')->insert([
             'name' => 'Mikle',
             'email' =>  Str::random(10).'@gmail.com',
-            'email_verified_at' => Str::random(10),
-            'password' => Hash::make('password'),
-        ));
-        User::create(array(
+            'password' => Hash::make('password'),  
+        ]);
+        DB::table('users')->insert([
             'name' => 'Tony',
             'email' =>  Str::random(10).'@gmail.com',
-            'email_verified_at' => Str::random(10),
-            'password' => Hash::make('password'),
-        ));
-        User::create(array(
+            'password' => Hash::make('password'), 
+            ]);
+        DB::table('users')->insert([
             'name' => 'Andre',
             'email' =>  Str::random(10).'@gmail.com',
-            'email_verified_at' => Str::random(10),
             'password' => Hash::make('password'),
-        ));
+        ]);
     }
 }
