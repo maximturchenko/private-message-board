@@ -8,6 +8,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" media="screen">
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet" media="screen">
     <script src="http://code.jquery.com/jquery.js"></script>
     <script src="{{ asset('js/bootstrap.min.js') }}"></script>
 
@@ -17,12 +18,17 @@
 @include('layouts.navigation')
 
 
-<div class="row-fluid">
+    <div class="row-fluid">
         <div class="span2"></div>
         <div class="span8">
             @yield('content')
         </div>
     </div>
+
+
+
+ @yield('scripts')
+
 
 </body>
 </html>

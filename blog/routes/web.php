@@ -15,9 +15,6 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-/*Route::get('/', function () {
-
-});*/
 
 Auth::routes([
     'reset' => false,
@@ -26,5 +23,22 @@ Auth::routes([
 ]);
 
 Route::get('/', 'MainController@index')->name('home');
-Route::post('/messages/add', 'MainController@store');
-Route::put('/messages/edit', 'MainController@update');
+
+
+Route::get('message/{message}/edit', 'MainController@edit');
+
+Route::get('message/{message}/delete', 'MainController@delete');
+
+
+
+Route::post('/message/add', 'MainController@store')->name('add_message');
+
+Route::group(['prefix' => 'message'],function () {
+    Route::put('/{message}', 'MainController@update')
+        ->name('update_message')
+        ->middleware('can:update-message,message');
+
+    Route::delete('/{message}', 'MainController@destroy')
+        ->name('delete_message')
+        ->middleware('can:delete-message,message');
+});
