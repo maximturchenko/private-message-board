@@ -31,10 +31,14 @@ Route::get('message/{message}/delete', 'MainController@delete');
 
 
 
-Route::post('/message/add', 'MainController@store')->name('add_message');
+
 
 
 Route::group(['prefix' => 'message'],function () {
+    Route::post('/add', 'MainController@store')
+        ->name('add_message')
+        ->middleware('can:add-message');
+
     Route::put('/{message}', 'MainController@update')
         ->name('update_message')
         ->middleware('can:update-message,message');
