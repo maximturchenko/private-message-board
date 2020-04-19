@@ -60,16 +60,15 @@ class MainController extends Controller
      */
     public function update(Privatemessages $message, UpdateMessage $request)
     {
-        dd($message);
-        dd($request);
-        /*
-        $data = $request->only('title', 'body');
-        $data['slug'] = str_slug($data['title']);
-        $post->fill($data)->save();
-        return back();*/
+      $message = $message->find($request->id);
+      $data = $request->only('id', 'message');
+      $message->fill($data)->save();
 
-    // $message->update(request(['lastname','firstname','middlename','phone','email']));
-         return redirect('/yep/update');
+      $saving = array(
+        'id'    =>  $request->id,
+        'message'     =>  $request->message
+    );
+      echo json_encode($saving);
     }
 
     /**
@@ -81,7 +80,7 @@ class MainController extends Controller
     public function destroy(Privatemessages $message)
     {
         $message->delete();
-        return redirect('/');
+        echo json_encode("Deleted is succesful");
     }
 
 

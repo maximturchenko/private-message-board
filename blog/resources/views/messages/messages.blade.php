@@ -15,7 +15,6 @@
         </form>
     @endcan
 
-
     @foreach($messages as $mes)
         <div class="well" data-id-message="{{$mes->id}}">
             @can('update-message' , $mes)
@@ -24,14 +23,13 @@
 
                    @can('delete-message' , $mes)
                     <form action="/" method="post">
-                        @method('delete')
-                        <button type="submit delete"><i class="icon-trash"></i> </button>
+                        <i class="icon-trash delete"></i>
                     </form>
                    @endcan
                 </div>
             @endcan
             <h5>{{$mes->created_at}} {{ $mes->user->name }}: </h5>
-            {{$mes->message}}
+            <p>{{$mes->message}}</p>
         </div>
     @endforeach
 @endsection
@@ -46,6 +44,10 @@
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     }
                 });
+
+           $(document).on('click' ,function(e){
+                $(".alert").remove();
+            });
 
             $(document).on('click','.add',function(e){
                e.preventDefault();
@@ -65,38 +67,48 @@
 
             $(document).on('click','.link-edit',function(e){
                 e.preventDefault();
+                $(".update_form").remove();
                 var content = $(this).closest(".well");
-                var idmessage = content.data("id-message");
-                var textmessage = content.clone().children().remove().end().text().replace(/\s{2,}/g, ' ');
-                content.append('<form action="/" method="post">'+'<textarea style="width: 100%; height: 50px;" type="password" id="'+idmessage+'" name="message" placeholder="Ваше сообщение...">'+textmessage+'</textarea>'
-                +'<button type="submit edit"><i class="icon-ok"></i> </button></form>');
+                var textmessage = content.find("p").text();
+                content.append('<form action="/" class="update_form" method="post">'+'<textarea style="width: 100%; height: 50px;" type="password" id="inputText" name="message" placeholder="Ваше сообщение...">'+textmessage+'</textarea>'
+                +'<input type="hidden" name="_method" value="PUT"><button type="submit" class="edit"><i class="icon-ok"></i> </button></form>');
             });
+
+
 
             $(document).on('click','.edit',function(e){
                 e.preventDefault();
-
-                var id =$(this).closest("textarea[name='message']").attr('id');
-                var message =$(this).closest("textarea[name='message']").val();
-
-                console.log(id);
-                console.log(message);
-
+                var content = $(this).closest(".well");
+                var id = content.data("id-message");
+                var message =content.find("textarea").val();
                 $.ajax({
-                    url:"{{route('update_message')}}",
-                    method:"POST",
-                    data: data,
+                    url: `/message/${id}`,
+                    method:"PUT",
+                    data: {id:id,message:message},
                     success:function(data){
-
+                        var data = JSON.parse(data);
+                        $(".update_form").remove();
+                        content.find("p").text(data.message);
+                        content.before('<div class="alert alert-success">Успешно обновлено.</div>');
                     }
-
                 })
 
-
             });
+
 
 
             $(document).on('click','.delete',function(e){
                 e.preventDefault();
+                var content = $(this).closest(".well");
+                var id = content.data("id-message");
+                $.ajax({
+                    url: `/message/${id}`,
+                    method:"DELETE",
+                    data: {_method: 'delete', _token :"{{csrf_token()}}"},
+                    success:function(data){
+                        content.remove();
+                    }
+                })
 
             });
         });

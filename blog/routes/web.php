@@ -33,6 +33,7 @@ Route::get('message/{message}/delete', 'MainController@delete');
 
 Route::post('/message/add', 'MainController@store')->name('add_message');
 
+
 Route::group(['prefix' => 'message'],function () {
     Route::put('/{message}', 'MainController@update')
         ->name('update_message')
@@ -42,3 +43,4 @@ Route::group(['prefix' => 'message'],function () {
         ->name('delete_message')
         ->middleware('can:delete-message,message');
 });
+
