@@ -14,7 +14,7 @@ class Privatemessages extends Model
      * @var array
      */
     protected $fillable = [
-        'user_id', 'message'
+        'user_id', 'message','privatemessage'
     ];
 
 

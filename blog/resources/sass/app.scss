@@ -9,3 +9,15 @@
     width: 40px;
     justify-content: space-around;
 }
+
+.privatemessage-panel{
+    position: absolute;
+    right: 0;
+    margin-right: 67px;
+    i{
+      cursor: pointer;
+    }
+}
+.hidden-secret{
+    color:red;
+}

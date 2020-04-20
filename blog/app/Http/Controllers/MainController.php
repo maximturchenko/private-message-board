@@ -33,12 +33,14 @@ class MainController extends Controller
             Privatemessages::create([
                 "user_id" => Auth::id(),
                 "message" => encrypt($request->message),
+                "privatemessage" => true,
             ]
           );
         }else{
             Privatemessages::create([
                 "user_id" => Auth::id(),
                 "message" => $request->message,
+                "privatemessage" => false,
             ]
           );
         }
@@ -57,6 +59,27 @@ class MainController extends Controller
     }
 
 
+    /**
+     * Show the private message.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function showprivatemessage()
+    {
+        /*
+
+        use Illuminate\Support\Facades\Hash;
+
+            //1ый аргумент это пароль
+            //2ой аргумент это из базы пароль хешовый
+                    if (Hash::check('12341234', $user->password)) {
+                        return true;
+                    }else{
+                        return false;
+                    }
+                });
+        */
+    }
 
 
      /**

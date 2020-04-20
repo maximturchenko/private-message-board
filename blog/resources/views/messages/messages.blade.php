@@ -22,10 +22,18 @@
 
     @foreach($messages as $mes)
         <div class="well" data-id-message="{{$mes->id}}">
+
+        <div class="privatemessage-panel">
+            @if($mes->privatemessage)
+             <i class="icon-eye-close open"></i>
+            @else
+             <i class="icon-eye-open"></i>
+            @endif
+        </div>
+
             @can('update-message' , $mes)
                 <div class="control-panel">
                    <a href="#" class="link-edit"><i class="icon-edit"></i></a>
-
                    @can('delete-message' , $mes)
                     <form action="/" method="post">
                         <i class="icon-trash delete"></i>
@@ -34,10 +42,30 @@
                 </div>
             @endcan
             <h5>{{$mes->created_at}} {{ $mes->user->name }}: </h5>
-            <p>{{$mes->message}}</p>
+            @if($mes->privatemessage)
+                <p class="hidden-secret">Сообщение является приватным</p>
+            @else
+             <p>{{$mes->message}}</p>
+            @endif
         </div>
     @endforeach
+
+
+
+    <form id="form" class="myform">
+        <input type="name" name="name" placeholder="Ваше имя"><br>
+        <input type="number" name="phone" placeholder="+79999999"><br>
+        <button type="submit">Отправить</button>
+      </form>
+    <style>
+        .myform{
+            display: none;
+        }
+    </style>
+
 @endsection
+
+
 
 
 
@@ -67,8 +95,13 @@
                         form.append('<div class="alert alert-success">Успешно добавлено.</div>');
                     }
                 })
-
             });
+
+
+            $(document).on('click','.open',function(e){
+                $(".myform").show();
+            });
+
 
             $(document).on('click','.link-edit',function(e){
                 e.preventDefault();

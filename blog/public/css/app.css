@@ -11,3 +11,17 @@
   justify-content: space-around;
 }
 
+.privatemessage-panel {
+  position: absolute;
+  right: 0;
+  margin-right: 67px;
+}
+
+.privatemessage-panel i {
+  cursor: pointer;
+}
+
+.hidden-secret {
+  color: red;
+}
+
