@@ -29,11 +29,19 @@ class MainController extends Controller
      */
     public function store(CustomRequest $request)
     {
-      Privatemessages::create([
-            "user_id" => Auth::id(),
-            "message" => $request->message,
-        ]
-      );
+        if($request->privatemessage==1){
+            Privatemessages::create([
+                "user_id" => Auth::id(),
+                "message" => encrypt($request->message),
+            ]
+          );
+        }else{
+            Privatemessages::create([
+                "user_id" => Auth::id(),
+                "message" => $request->message,
+            ]
+          );
+        }
         return true;
     }
 

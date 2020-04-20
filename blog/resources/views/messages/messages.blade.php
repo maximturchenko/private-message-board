@@ -10,6 +10,11 @@
                     data-cip-id="inputText"></textarea>
             </div>
             <div class="control-group">
+                <label class="checkbox">
+                    <input type="checkbox" id="privatemessage" name="privatemessage" value="privatemessage"> Приватное сообщение
+                </label>
+            </div>
+            <div class="control-group">
                 <button type="submit" class="btn btn-primary add">Отправить сообщение</button>
             </div>
         </form>
@@ -53,11 +58,11 @@
                e.preventDefault();
                 var form = $(this).closest("form");
                 var message =$("[name='message']").val();
-
+                var privatemessage =$("#privatemessage:checked").length;
                 $.ajax({
                     url:"{{route('add_message')}}",
                     method: "POST",
-                    data:{message:message},
+                    data:{message:message,privatemessage:privatemessage},
                     success:function(data){
                         form.append('<div class="alert alert-success">Успешно добавлено.</div>');
                     }
