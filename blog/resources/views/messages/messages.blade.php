@@ -51,18 +51,15 @@
     @endforeach
 
 
+    <div id="myModal" class="modal hide fade">
+        <form id="form" class="myform">
+             <h1>Введите пароль</h1>
+            <input type="password" name="password" id="password"><br>
+            <button type="submit" class="checkprivate">Отправить</button>
+        </form>
+    </div>
 
-    <form id="form" class="myform">
-        <input type="name" name="name" placeholder="Ваше имя"><br>
-        <input type="number" name="phone" placeholder="+79999999"><br>
-        <button type="submit">Отправить</button>
-      </form>
-    <style>
-        .myform{
-            display: none;
-        }
-    </style>
-
+    <div id="qwerty"></div>
 @endsection
 
 
@@ -98,9 +95,7 @@
             });
 
 
-            $(document).on('click','.open',function(e){
-                $(".myform").show();
-            });
+
 
 
             $(document).on('click','.link-edit',function(e){
@@ -130,8 +125,46 @@
                         content.before('<div class="alert alert-success">Успешно обновлено.</div>');
                     }
                 })
+            });
+
+            $(document).on('click','.open',function(e){
+                var content = $(this).closest(".well");
+                var id = content.data("id-message");
+                $('#myModal').data("id-message",id);
+                $('#myModal').modal();
+            });
+
+            $(document).on('click','.checkprivate',function(e){
+                e.preventDefault();
+
+                var password =$("#password").val();
+                var content = $(this).closest("form");
+                var id = $('#myModal').data("id-message");
+                $.ajax({
+                    url: `/checkpassword/${id}`,
+                    method:"POST",
+                    data: {password:password},
+                    success:function(data){
+                        var data = JSON.parse(data);
+                       if(data){
+                            content.before('<div class="alert alert-success">Вы можете посмотреть скрытое сообщение</div>');
+                            var showtext = $(".span8").find("[data-id-message='" + id + "']");
+                           showtext.find("p").removeClass().text(data);
+                            setTimeout(function () {
+                                $('#myModal').modal('toggle');
+                            }, 800);
+                        }else{
+                            content.before('<div class="alert alert-danger"> Неверный пароль</div>');
+                        }
+                    }
+                })
 
             });
+
+
+
+
+
 
 
 

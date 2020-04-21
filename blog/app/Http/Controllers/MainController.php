@@ -8,6 +8,10 @@ use App\Privatemessages;
 use App\Http\Requests\CustomRequest;
 use App\Http\Requests\UpdateMessage;
 
+use Illuminate\Foundation\Http\FormRequest;
+
+use Illuminate\Support\Facades\Hash;
+
 class MainController extends Controller
 {
     /**
@@ -64,21 +68,13 @@ class MainController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function showprivatemessage()
+    public function showprivatemessage(Privatemessages $message , Request $request)
     {
-        /*
-
-        use Illuminate\Support\Facades\Hash;
-
-            //1ый аргумент это пароль
-            //2ой аргумент это из базы пароль хешовый
-                    if (Hash::check('12341234', $user->password)) {
-                        return true;
-                    }else{
-                        return false;
-                    }
-                });
-        */
+        if (Hash::check($request->password, $request->user()->password)) {
+            echo json_encode(decrypt($message->message));
+        }else{
+            echo json_encode(0);
+        }
     }
 
 

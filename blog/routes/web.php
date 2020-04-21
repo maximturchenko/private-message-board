@@ -31,9 +31,6 @@ Route::get('message/{message}/delete', 'MainController@delete');
 
 
 
-
-
-
 Route::group(['prefix' => 'message'],function () {
     Route::post('/add', 'MainController@store')
         ->name('add_message')
@@ -47,4 +44,6 @@ Route::group(['prefix' => 'message'],function () {
         ->name('delete_message')
         ->middleware('can:delete-message,message');
 });
+
+Route::post('/checkpassword/{message}', 'MainController@showprivatemessage');
 
