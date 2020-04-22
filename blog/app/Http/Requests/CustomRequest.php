@@ -7,6 +7,8 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Contracts\Validation\Validator;
 
+use Illuminate\Http\Exceptions\HttpResponseException;
+
 class CustomRequest extends FormRequest
 {
     /**
@@ -49,8 +51,12 @@ class CustomRequest extends FormRequest
      */
     protected function failedValidation(Validator $validator)
     {
-        throw (new ValidationException($validator));
-         dd($validator);
+        $errors=["errors"=>$validator->errors()->all()];
+      // echo json_encode($errors);
+      //return response()->json(['message' => 'Os dados fornecidos não são válidos.'],422);
+       // throw (new ValidationException($validator));
+
+       throw new HttpResponseException(response()->json(['message' => 'Os dados fornecidos não são válidos.'],422));
     }
 
 

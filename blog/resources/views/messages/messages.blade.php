@@ -59,7 +59,6 @@
         </form>
     </div>
 
-    <div id="qwerty"></div>
 @endsection
 
 
@@ -89,14 +88,21 @@
                     method: "POST",
                     data:{message:message,privatemessage:privatemessage},
                     success:function(data){
-                        form.append('<div class="alert alert-success">Успешно добавлено.</div>');
+                        debugger;
+                        var data = JSON.parse(data);
+                        if(data.errors){
+                            form.append('<div class="alert alert-danger">'+data.errors.message+'</div>');
+                        }else{
+                            form.append('<div class="alert alert-success">Успешно добавлено.</div>');
+                        }
+                    },
+                    error:function(error){
+
+                        console.log(error.responseJSON.message);
+                        debugger;
                     }
                 })
             });
-
-
-
-
 
             $(document).on('click','.link-edit',function(e){
                 e.preventDefault();
@@ -160,13 +166,6 @@
                 })
 
             });
-
-
-
-
-
-
-
 
             $(document).on('click','.delete',function(e){
                 e.preventDefault();
