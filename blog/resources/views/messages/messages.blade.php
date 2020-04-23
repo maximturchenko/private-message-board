@@ -1,7 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-
+<div class="span2"></div>
+<div class="span8">
     @can('add-message')
         <form action="/" method="post" class="form-horizontal" style="margin-bottom: 50px;">
             @include('layouts.errors')
@@ -58,7 +59,7 @@
             <button type="submit" class="checkprivate">Отправить</button>
         </form>
     </div>
-
+</div>
 @endsection
 
 
@@ -90,16 +91,15 @@
                     success:function(data){
                         debugger;
                         var data = JSON.parse(data);
-                        if(data.errors){
-                            form.append('<div class="alert alert-danger">'+data.errors.message+'</div>');
-                        }else{
-                            form.append('<div class="alert alert-success">Успешно добавлено.</div>');
+                        if(data){
+                            form.before('<div class="alert alert-success">Успешно добавлено.</div>');
                         }
                     },
                     error:function(error){
-
-                        console.log(error.responseJSON.message);
                         debugger;
+                        if(error.responseJSON.errors){
+                            error.responseJSON.errors.forEach(element =>  form.before('<div class="alert alert-error">'+element+'</div>'));
+                        }
                     }
                 })
             });
@@ -160,7 +160,7 @@
                                 $('#myModal').modal('toggle');
                             }, 800);
                         }else{
-                            content.before('<div class="alert alert-danger"> Неверный пароль</div>');
+                            content.before('<div class="alert alert-error"> Неверный пароль</div>');
                         }
                     }
                 })

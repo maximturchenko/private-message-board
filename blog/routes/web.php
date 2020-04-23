@@ -47,3 +47,5 @@ Route::group(['prefix' => 'message'],function () {
 
 Route::post('/checkpassword/{message}', 'MainController@showprivatemessage');
 
+Route::view('reg_success', 'auth.reg_success')->name('reg_success');
+

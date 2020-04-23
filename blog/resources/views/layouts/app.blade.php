@@ -19,10 +19,7 @@
 
 
     <div class="row-fluid">
-        <div class="span2"></div>
-        <div class="span8">
-            @yield('content')
-        </div>
+        @yield('content')
     </div>
 
 
