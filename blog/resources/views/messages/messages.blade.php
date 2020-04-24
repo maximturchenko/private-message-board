@@ -62,6 +62,7 @@
                     data:{message:message,privatemessage:privatemessage},
                     success:function(data){
                         $(".content").html(data);
+                        $("textarea#inputText").val("");
                         if(data){
                             form.before('<div class="alert alert-success">Успешно добавлено.</div>');
                         }
