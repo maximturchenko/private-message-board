@@ -21,37 +21,9 @@
         </form>
     @endcan
 
-    @foreach($messages as $mes)
-        <div class="well" data-id-message="{{$mes->id}}">
-
-        <div class="privatemessage-panel">
-            @if($mes->privatemessage)
-             <i class="icon-eye-close open"></i>
-            @else
-             <i class="icon-eye-open"></i>
-            @endif
-        </div>
-
-            @can('update-message' , $mes)
-                <div class="control-panel">
-                   <a href="#" class="link-edit"><i class="icon-edit"></i></a>
-                   @can('delete-message' , $mes)
-                    <form action="/" method="post">
-                        <i class="icon-trash delete"></i>
-                    </form>
-                   @endcan
-                </div>
-            @endcan
-            <h5>{{$mes->created_at}} {{ $mes->user->name }}: </h5>
-            @if($mes->privatemessage)
-                <p class="hidden-secret">Сообщение является приватным</p>
-            @else
-             <p>{{$mes->message}}</p>
-            @endif
-        </div>
-    @endforeach
-
-
+    <div class="content">
+        @include('messages.content')
+    </div>
     <div id="myModal" class="modal hide fade">
         <form id="form" class="myform">
              <h1>Введите пароль</h1>
@@ -89,7 +61,7 @@
                     method: "POST",
                     data:{message:message,privatemessage:privatemessage},
                     success:function(data){
-                        var data = JSON.parse(data);
+                        $(".content").html(data);
                         if(data){
                             form.before('<div class="alert alert-success">Успешно добавлено.</div>');
                         }

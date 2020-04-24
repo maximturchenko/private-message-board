@@ -48,7 +48,10 @@ class MainController extends Controller
             ]
           );
         }
-        return true;
+    //    return true;
+
+        $messages = Privatemessages::all()->sortByDesc('created_at');
+        return view('messages.content', compact('messages'));
     }
 
 
