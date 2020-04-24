@@ -89,14 +89,12 @@
                     method: "POST",
                     data:{message:message,privatemessage:privatemessage},
                     success:function(data){
-                        debugger;
                         var data = JSON.parse(data);
                         if(data){
                             form.before('<div class="alert alert-success">Успешно добавлено.</div>');
                         }
                     },
                     error:function(error){
-                        debugger;
                         if(error.responseJSON.errors){
                             error.responseJSON.errors.forEach(element =>  form.before('<div class="alert alert-error">'+element+'</div>'));
                         }

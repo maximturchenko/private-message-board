@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddPrivatemessagefieldTable extends Migration
+class AddrememberTokeninUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddPrivatemessagefieldTable extends Migration
      */
     public function up()
     {
-        Schema::table('privatemessages', function ($table) {
-            $table->boolean('privatemessage');
+        Schema::table('users', function ($table) {
+            $table->string('remember_token', 1000);
         });
     }
 
@@ -25,8 +25,8 @@ class AddPrivatemessagefieldTable extends Migration
      */
     public function down()
     {
-        Schema::table('privatemessages', function($table) {
-            $table->dropColumn('privatemessage');
+        Schema::table('users', function($table) {
+            $table->dropColumn('remember_token');
         });
     }
 }

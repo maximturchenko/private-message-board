@@ -50,7 +50,7 @@
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     }
-                });
+              });
 
            $(document).on('click' ,function(e){
                 $(".alert").remove();
@@ -69,6 +69,7 @@
                         location.href = "{{route('home')}}";
                     },
                     error:function(error){
+                        debugger;
                         if(error.responseJSON.errors){
                            Object.keys(error.responseJSON.errors).forEach(function (key){
                                 form.before('<div class="alert alert-error">'+error.responseJSON.errors[key]+'</div>');
